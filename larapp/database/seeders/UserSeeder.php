@@ -17,12 +17,10 @@ class UserSeeder extends Seeder
     {
        //Metodo Insert
        DB::table('users')->insert([
-        'fullname' => 'Jeremias Springfield',
-        'email'    => 'jeremias@gmail.com',
+        'fullname' => 'Jeremias Springfield',   
+        'email'    => 'jeremias@gmail.com',     
         'phone'    => '320123121',
-        'birthdate'    => '1970-10-05',
-        'gender'   => 'Male',
-        'address'  => 'Avenida Siempre Viva 12',
+        'birthdate'    => '1970-10-05',        
         'role'     => 'Admin',
         'password' => bcrypt('admin'),
 
@@ -30,12 +28,10 @@ class UserSeeder extends Seeder
 
     //Metodo ORM
     $user = new User;
-    $user->fullname = 'Homero Simpson';
-    $user->email    = 'homero@gmail.com';
+    $user->fullname = 'Homero Simpson'; 
+    $user->email    = 'homero@gmail.com';  
     $user->phone    =  320123122;
-    $user->birthdate= '1980-11-15';
-    $user->gender   = 'Male';
-    $user->address  = 'Avenida Siempre Viva';
+    $user->birthdate= '1980-11-15';   
     $user->role     = 'Editor';
     $user->password = bcrypt('editor');
     $user->save();

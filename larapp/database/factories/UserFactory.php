@@ -22,12 +22,20 @@ class UserFactory extends Factory
      */
     public function definition()
     {
-        return [
-            'name' => $this->faker->name,
-            'email' => $this->faker->unique()->safeEmail,
+        return [   
+            'fullname'  => $this->faker -> name,
+            'email'     => $this->faker -> unique()->safeEmail,  
+            'phone'     => $this->faker -> numberBetween($min = 310100000, $max = 320200000), 
+            'birthdate' => $this->faker -> dateTimeBetween($startDate = '1960', $endDate = '1999', $timezone = null),   
+            'photo'     => $this->faker -> imageUrl('/storage/app/public/imgs', $width = 150, $height = 150),
+            'role'      => 'Editor', 
             'email_verified_at' => now(),
-            'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
+            'password'  => bcrypt('editor'),            
             'remember_token' => Str::random(10),
+
+                 
         ];
     }
 }
+
+
