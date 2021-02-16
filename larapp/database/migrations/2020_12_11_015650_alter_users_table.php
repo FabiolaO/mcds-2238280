@@ -14,13 +14,15 @@ class AlterUsersTable extends Migration
     public function up()
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->renameColumn('name', 'fullname'); 
-            $table->bigInteger('phone')->after('email');          
-            $table->date('birthdate')->after('phone');          
-            $table->string('photo')->default('imgs/no-photo.png')->after('birthdate');
+            $table->renameColumn('name', 'fullname');
+            $table->bigInteger('phone')->after('email');
+            $table->date('birthdate')->after('phone');
+            $table->string('gender')->after('birthdate');
+            $table->string('address')->after('gender');
+            $table->string('photo')->default('imgs/no-photo.png')->after('address');
             $table->string('role')->default('Customer')->after('photo');
             $table->boolean('active')->default(1)->after('role');
-                    });
+        });
     }
 
     /**
@@ -32,8 +34,7 @@ class AlterUsersTable extends Migration
     {
         Schema::table('users', function (Blueprint $table) {
             $table->renameColumn('fullname', 'name');
-            $table->dropColumn(['phone', 'birthdate', 'photo', 'role', 'active']);
-
-                    });
+            $table->dropColumn(['phone', 'birthdate', 'gender', 'address', 'photo', 'role', 'active']);
+        });
     }
 }

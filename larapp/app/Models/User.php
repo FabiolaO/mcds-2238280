@@ -20,7 +20,9 @@ class User extends Authenticatable
         'fullname',
         'email',
         'phone',
-        'birthdate',       
+        'birthdate',
+        'gender',
+        'adress',
         'photo',
         'role',
         'active',
@@ -45,4 +47,8 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public function games() {
+        return $this->hasMany('App\Models\Game');
+    }
 }
