@@ -40,6 +40,21 @@
                     <ul class="navbar-nav ml-auto">
                         <!-- Authentication Links -->
                         @guest
+                        @if (Route::has('login'))   
+                               <li class="nav-item">   
+                                <div class="btn-group">
+                                    <button type="button" class="btn btn-primary">Language</button>
+                                    <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
+                                      <span class="caret"></span>
+                                    </button>
+                                    <ul class="dropdown-menu" role="menu">                                                                             
+                                      <li><a href= "{{route('language' , 'es')}}"><img src="https://cdn.icon-icons.com/icons2/97/PNG/256/colombia_flags_flag_16986.png" widt="20" height="20" alt=""></a></li>
+                                      <li><a href= "{{route('language' , 'en')}}"><img src="https://cdn.icon-icons.com/icons2/97/PNG/256/united_states_flags_flag_17080.png" widt="20" height="20" alt=""></a></li>                                     
+                                    </ul>
+                                  </div>                                                                                          
+                                </li>
+                            @endif
+                            
                             @if (Route::has('login'))
                                 <li class="nav-item">
                                     <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
@@ -51,10 +66,12 @@
                                     <a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a>
                                 </li>
                             @endif
+
+                            
                         @else
                             <li class="nav-item dropdown">
                                 <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                                    {{ Auth::user()->name }}
+                                    {{ Auth::user()->fullname }}
                                 </a>
 
                                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">

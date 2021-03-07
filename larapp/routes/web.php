@@ -44,18 +44,32 @@ Route::get('challenge', function () {
     }
     dd($results);
 });
-Auth::routes();
-
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
 
 
   Route::get('viewusers', function () {
     $users = App\Models\User::all();
     return view('viewusers')->with('users', $users);
-  
-  
-             
+
+});
+
+    Route::get('examples', function() {
+            return view('examples');           
 
 
 });
+
+
+Route::get('language/(lang)','controller@language')->name('language'); 
+               
+
+
+
+Auth::routes();
+
+Route::get('/language', [App\Http\Controllers\HomeController::class, 'index'])->name('language');
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
+
+
+
