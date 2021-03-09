@@ -40,30 +40,46 @@
                     <ul class="navbar-nav ml-auto">
                         <!-- Authentication Links -->
                         @guest
-                        @if (Route::has('login'))   
-                               <li class="nav-item">   
-                                <div class="btn-group">
-                                    <button type="button" class="btn btn-primary">Language</button>
-                                    <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
-                                      <span class="caret"></span>
-                                    </button>
-                                    <ul class="dropdown-menu" role="menu">                                                                             
-                                      <li><a href= "{{route('language' , 'es')}}"><img src="https://cdn.icon-icons.com/icons2/97/PNG/256/colombia_flags_flag_16986.png" widt="20" height="20" alt=""></a></li>
-                                      <li><a href= "{{route('language' , 'en')}}"><img src="https://cdn.icon-icons.com/icons2/97/PNG/256/united_states_flags_flag_17080.png" widt="20" height="20" alt=""></a></li>                                     
-                                    </ul>
-                                  </div>                                                                                          
-                                </li>
-                            @endif
+                        @php $locale = session()->get('locale'); @endphp
+                        <li  class="nav-item dropdown">
+                            <a href="#" id="navbarDropdown" class="nav-link dropdwn-toggle" data-toggle="dropdown">
+                                @switch($locale)
+                                    @case('en')
+                                    <img src="{{ asset('imgs/en.png') }}" width="20px"> English
+                                        
+                                        @break
+                                    @case('es')
+                                    <img src="{{ asset('imgs/es.png') }}" width="20px"> Español
+                                        
+                                        @break
+                                    @default
+                                    <img src="{{ asset('imgs/es.png') }}" width="20px"> Español
+                                @endswitch
+                                <span class="caret"></span>
+                            </a>
+
+                            <div class="dropdown-menu dowpdown-menu-right">
+                            <a href="{{ url('locale/en') }}" class="dropdown-item">
+                                <img src="{{ asset('imgs/en.png') }}" with="20px"> English
+                             </a>
+                             <a href="{{ url('locale/es') }}" class="dropdown-item">
+                                <img src="{{ asset('imgs/es.png') }}" with="20px"> Español
+                             </a>
+
+                             </div>
+
+                        </li>
+                       
                             
                             @if (Route::has('login'))
                                 <li class="nav-item">
-                                    <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
+                                    <a class="nav-link" href="{{ route('login') }}">@lang('general.navbar-login')</a>
                                 </li>
                             @endif
                             
                             @if (Route::has('register'))
                                 <li class="nav-item">
-                                    <a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a>
+                                    <a class="nav-link" href="{{ route('register') }}">@lang('general.navbar-register')</a>
                                 </li>
                             @endif
 

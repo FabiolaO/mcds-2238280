@@ -57,19 +57,14 @@ Route::get('challenge', function () {
             return view('examples');           
 
 
-});
-
-
-Route::get('language/(lang)','controller@language')->name('language'); 
-               
+});            
 
 
 
 Auth::routes();
 
-Route::get('/language', [App\Http\Controllers\HomeController::class, 'index'])->name('language');
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
-
-
+Route::get('locale/{locale}', [App\Http\Controllers\LocaleController::class, 'index']);
+//Route::get('locale/{locale}', 'LocaleController@index');
 
