@@ -2,6 +2,12 @@
 
 use Illuminate\Support\Facades\Route;
 use Illuminate\Http\Request;
+use Carbon\Carbon;
+use App\Http\Controllers\LocaleController;
+use App\Http\Controllers\HomeController;
+use App\Http\Controllers\UserController;
+use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\GameController;
 
 /*
 |--------------------------------------------------------------------------
@@ -63,8 +69,13 @@ Route::get('challenge', function () {
 
 Auth::routes();
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::get('/home', [HomeController::class, 'index'])->name('home');
 
-Route::get('locale/{locale}', [App\Http\Controllers\LocaleController::class, 'index']);
+Route::get('locale/{locale}', [LocaleController::class, 'index']);
 //Route::get('locale/{locale}', 'LocaleController@index');
 
+Route::resources([
+    'users'       => 'UserController',
+    //'catgories' => CategoryController,
+    //'games'     => GameController,
+]);
