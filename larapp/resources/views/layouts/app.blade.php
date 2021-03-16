@@ -45,9 +45,32 @@
     <script src="{{ asset('js/owl.carousel.min.js') }}"></script>
 
     <script>
-        $(document).ready(function() {
+       $(document).ready(function() {
             /* - - -*/
             /* - - -*/
+            /* - - - - - - - - - - - - - - - - - - */
+            $('.btn-upload').click(function() {
+                $('#photo').click();
+            });
+            /* - - - - - - - - - - - - - - - - - - */
+            $('#photo').change(function(event) {
+                let reader = new FileReader();
+                reader.onload = function(event) {
+                    $('#preview').attr('src', event.target.result);
+                }
+                reader.readAsDataURL(this.files[0]);
+            });
+            /* - - - - - - - - - - - - - - - - - - */
+            @if (session('message'))
+                Swal.fire({
+                    position: 'top-end',
+                    icon: 'success',
+                    title: '{{ session('message') }}',
+                    showConfirmButton: false,
+                    timer: 2500
+                    });
+            @endif
+            /* - - - - - - - - - - - - - - - - - - */
         });
     </script>
 </body>

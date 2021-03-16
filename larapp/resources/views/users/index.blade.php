@@ -8,7 +8,7 @@
          <div class="col-md-12 offset-md-1">
              <h1><i class="fas fa-users"></i>Modulo Users</h1>
              <hr>
-             <a href="" class="btn btn-success">
+             <a href="{{ route('users.create') }}" class="btn btn-success">
                  <i class="fas fa-plus"></i>Add Users
                 </a>
                 <br>
@@ -27,7 +27,7 @@
                         <tr>
                             <td>{{ $user->fullname }}</td>
                             <td>{{ $user->email }}</td>
-                            <td><img src="{{ asset($user->photo) }}" width="36px"></td>
+                            <td><img src="{{ asset($user->photo) }}" width="36px" class="img-thumbnail rounded-circle"></td>
                             <td>{{ $user->role }}</td>
                             <td>
                                 <a href="" class="btn btn-sm btn-larapp">
