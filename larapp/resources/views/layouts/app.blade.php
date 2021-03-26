@@ -45,9 +45,7 @@
     <script src="{{ asset('js/owl.carousel.min.js') }}"></script>
 
     <script>
-       $(document).ready(function() {
-            /* - - -*/
-            /* - - -*/
+        $(document).ready(function() {
             /* - - - - - - - - - - - - - - - - - - */
             $('.btn-upload').click(function() {
                 $('#photo').click();
@@ -70,6 +68,43 @@
                     timer: 2500
                     });
             @endif
+            /* - - - - - - - - - - - - - - - - - - */
+            $('.btn-delete').click(function() {
+                Swal.fire({
+                    title: 'Are you sure?',
+                    text: "You won't be able to revert this!",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#1e5f74',
+                    cancelButtonColor: '#d0211c',
+                    confirmButtonText: 'Yes, delete it!'
+                    }).then((result) => {
+                    if (result.value) {
+                        $(this).parent().submit();
+                    }
+                    });
+            });
+            /* - - - - - - - - - - - - - - - - - - */
+            $('body').on('keyup', '#qsearch', function(event) {
+                event.preventDefault();
+                $q = $(this).val();
+                $t = $('input[name=_token]').val();
+                $m = $('#tmodel').val();
+
+                $('.loader').removeClass('d-none');
+                $('.table').hide();
+
+                $sto = setTimeout(function() {
+                    clearTimeout($sto);
+                    $.post($m+"/search", {q: $q, _token: $t},
+                        function (data) {
+                              $('.loader').addClass('d-none');
+                              $('#content').html(data); 
+                              $('.table').fadeIn('slow'); 
+                        }
+                    );
+                }, 2000);
+            });
             /* - - - - - - - - - - - - - - - - - - */
         });
     </script>

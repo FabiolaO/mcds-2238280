@@ -74,6 +74,8 @@ Route::get('/home', [HomeController::class, 'index'])->name('home');
 Route::get('locale/{locale}', [LocaleController::class, 'index']);
 //Route::get('locale/{locale}', 'LocaleController@index');
 
+Route::post('users/search', [UserController::class, 'search']);
+
 Route::resources([
     'users'       => 'UserController',
     //'catgories' => CategoryController,
