@@ -78,6 +78,6 @@ Route::post('users/search', [UserController::class, 'search']);
 
 Route::resources([
     'users'       => 'UserController',
-    //'catgories' => CategoryController,
+    'categories' => 'CategoryController',
     //'games'     => GameController,
 ]);

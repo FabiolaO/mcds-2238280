@@ -4,8 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Models\Category;
 use Illuminate\Http\Request;
+use App\Http\Requests\CategoryRequest;
 
-class CaegoryController extends Controller
+class CategoryController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,9 +15,11 @@ class CaegoryController extends Controller
      */
     public function index()
     {
-        //
+        $categories = Category::paginate(50);
+        return view('categories.index')->with('categories',$categories);
     }
 
+   
     /**
      * Show the form for creating a new resource.
      *
@@ -24,7 +27,7 @@ class CaegoryController extends Controller
      */
     public function create()
     {
-        //
+        return view('categories.create');
     }
 
     /**
@@ -33,9 +36,20 @@ class CaegoryController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(CategoryRequest $request)
     {
-        //
+        $category = new Category;
+        $category->name  = $request->name;
+        if ($request->hasFile('image')) {
+            $file = time() . '.' . $request->image->extension();
+            $request->image->move(public_path('imgs'), $file);
+            $category->image = 'imgs/' . $file;        }
+        $category->description      = $request->description;        
+
+        if ($category->save()) {
+            return redirect('categories')->with('message', 'The Category: ' . $category->name . ' was successfully added');
+        }
+
     }
 
     /**
