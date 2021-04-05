@@ -60,7 +60,7 @@ class CategoryController extends Controller
      */
     public function show(Category $category)
     {
-        //
+        return view('categories.show')->with('category', $category);
     }
 
     /**
@@ -71,7 +71,7 @@ class CategoryController extends Controller
      */
     public function edit(Category $category)
     {
-        //
+        return view('categories.edit')->with('category', $category);
     }
 
     /**
@@ -81,9 +81,20 @@ class CategoryController extends Controller
      * @param  \App\Models\Category  $category
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Category $category)
+    public function update(CategoryRequest $request, Category $category)
     {
-        //
+        $category->name  = $request->name;
+        if ($request->hasFile('image')) {
+            $file = time() . '.' . $request->image->extension();
+            $request->image->move(public_path('imgs'), $file);
+            $category->image = 'imgs/' . $file;    
+            }
+        $category->description      = $request->description;        
+
+        if ($category->save()) {
+            return redirect('categories')->with('message', 'The Category: ' . $category->name . ' was successfully edited');
+        }
+
     }
 
     /**
@@ -94,6 +105,15 @@ class CategoryController extends Controller
      */
     public function destroy(Category $category)
     {
-        //
+        if ($category->delete()) {
+            return redirect('categories')->with('message', 'The Category: ' . $category->name . ' was successfully deleted');
+        }
+    }
+
+    public function search(Request $request) {
+        $categories = Category::names($request->q)->orderBy('id', 'DESC')->paginate(10);
+        return view('categories.search')->with('categories', $categories);
     }
 }
+
+

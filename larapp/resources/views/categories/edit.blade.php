@@ -1,27 +1,27 @@
 @extends('layouts.app')
 
-@section('title', 'Add Category')
+@section('title', 'Edit Category')
 
 @section('content')
 <div class="container">
     <div class="row">
         <div class="col-md-6 offset-md-3">
             <nav aria-label="breadcrumb">
-                <ol class="breadcrumb">
-                    <li class="breadcrumb-item">
-                        <a href="{{ url('home') }}"><i class="fas fa-clipboard-list"></i> Dashboard</a>
-                    </li>
-                    <li class="breadcrumb-item">
-                        <a href="{{ url('categories') }}"><i class="fas fa-categories"></i> Module Categories</a>
-                    </li>
-                    <li class="breadcrumb-item active" aria-current="page"><i class="fas fa-user-plus"></i> Add Category</li>
-                </ol>
-                </nav>
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item">
+                    <a href="{{ url('home') }}"><i class="fas fa-clipboard-list"></i> Dashboard</a>
+                </li>
+                <li class="breadcrumb-item">
+                    <a href="{{ url('categories') }}"><i class="fas fa-gamepad"></i> Module Categories</a>
+                </li>
+                <li class="breadcrumb-item active" aria-current="page"><i class="fas fa-gamepad-edit"></i> Edit Category</li>
+            </ol>
+            </nav>
             <div class="card">
                 <div class="card-header text-uppercase text-center">
                     <h5>
-                        <i class="fa fa-category-plus"></i> 
-                        Add Category
+                        <i class="fa fa-gamepad-edit"></i> 
+                        Edit Category
                     </h5>
                 </div>
 
@@ -41,21 +41,23 @@
                 </div> --}}
 
                 <div class="card-body">
-                    <form method="POST" action="{{ route('categories.store') }}" enctype="multipart/form-data">
+                    <form method="POST" action="{{ url('categories/'.$category->id) }}" enctype="multipart/form-data">
                         @csrf
+                        @method('PUT')
+                        <input type="hidden" name="id" value="{{ $category->id }}">
                         <div class="form-group">
-                                <input id="name" type="text" class="form-control @error('name') is-invalid @enderror" name="name" value="{{ old('name') }}" placeholder="@lang('name')" autofocus>
+                                <input id="name" type="text" class="form-control @error('name') is-invalid @enderror" name="name" value="{{ old('name', $category->name) }}" placeholder="@lang('general.label-name')" autofocus>
 
                                 @error('name')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
                                     </span>
                                 @enderror
-                        </div>                     
+                        </div>                       
 
-                        <div class="form-group">
+                      <div class="form-group">
                                 <div class="text-center my-3">
-                                    <img src="{{ asset('imgs/no-category.png') }}" width="120px" id="preview" class="img-thumbnail rounded-circle">
+                                    <img src="{{ asset($category->image) }}" width="120px" id="preview" class="img-thumbnail rounded-circle">
                                 </div>
                                 <button type="button" class="btn btn-block btn-secondary btn-upload"> 
                                     <i class="fas fa-upload"></i>
@@ -67,24 +69,25 @@
                                         <strong>{{ $message }}</strong>
                                     </span>
                                 @enderror
-                        </div>  
+                        </div>                        
 
-                
                         <div class="form-group">
-                            <input id="description" type="text" class="form-control @error('description') is-invalid @enderror" name="description" value="{{ old('description') }}" placeholder="@lang('description')">
+                                <input id="description" type="text" class="form-control @error('description') is-invalid @enderror" name="description" value="{{ old('description', $category->description) }}" placeholder="@lang('general.label-description')">
 
-                            @error('description')
-                                <span class="invalid-feedback" role="alert">
-                                    <strong>{{ $message }}</strong>
-                                </span>
-                            @enderror
-                    </div>
+                                @error('description')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
+                        </div>
+
+                        
 
                         
                         <div class="form-group">
                                 <button type="submit" class="btn btn-success btn-block text-uppercase">
-                                    <i class="fas fa-save"></i> 
-                                    Add
+                                    <i class="fas fa-pen"></i> 
+                                    Edit
                                 </button>
                                 <a href="{{ route('categories.index') }}" class="btn btn-block btn-secondary text-uppercase">
                                     <i class="fas fa-arrow-left"></i> 

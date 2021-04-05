@@ -76,6 +76,8 @@ Route::get('locale/{locale}', [LocaleController::class, 'index']);
 
 Route::post('users/search', [UserController::class, 'search']);
 
+Route::post('categories/search', [CategoryController::class, 'search']);
+
 Route::resources([
     'users'       => 'UserController',
     'categories' => 'CategoryController',

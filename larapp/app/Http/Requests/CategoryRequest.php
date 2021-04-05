@@ -26,7 +26,7 @@ class CategoryRequest extends FormRequest
       if ($this->method() == 'PUT') {
             return [
             'name'           => 'required',          
-            'description'    => 'escription',          
+            'description'    => 'required',          
         ];
     } else {
         return [
@@ -36,6 +36,8 @@ class CategoryRequest extends FormRequest
         ];
       }
     }
+
+    
     public function messages() {
         return [
             'name.required' => 'The ":attribute" field is required.',
