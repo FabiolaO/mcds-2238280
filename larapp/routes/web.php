@@ -78,8 +78,12 @@ Route::post('users/search', [UserController::class, 'search']);
 
 Route::post('categories/search', [CategoryController::class, 'search']);
 
+Route::post('games/search', [GameController::class, 'search']);
+// Export PDF
+Route::get('export/users/pdf', [UserController::class, 'pdf']);
+
 Route::resources([
     'users'       => 'UserController',
-    'categories' => 'CategoryController',
-    //'games'     => GameController,
+    'categories'  => 'CategoryController',
+    'games'       => 'GameController',
 ]);

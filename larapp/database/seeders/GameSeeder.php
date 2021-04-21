@@ -15,37 +15,34 @@ class GameSeeder extends Seeder
      */
     public function run()
     {
-         //Metodo Insert
-       DB::table('games')->insert([
-        'name'           => "Luigi’s Mansion 3",
-        'description'    => "Luigi’s Mansion 3 Nintendo Switch Las vacaciones de ensueño de Luigi se convierten en una pesadilla 
-                             que te pondrá los pelos de punta en Luigi’s Mansion 3 para Nintendo Switch! Luigi se ha embarcado en unas vacaciones de 
-                             ensueño junto a Mario y sus amigos.",
-        'user_id'        => 1,
-        'category_id'    => 1,
-        'slider'         => 1,
-        'price'          => 59    
-
+        // Metodo Insert
+        DB::table('games')->insert([
+            'name'        => "Luigi's Mansion 3",
+            'description' => "Luigi's Mansion 3 es un videojuego de acción-aventura desarrollado por Next Level Games y publicado por Nintendo para Nintendo Switch.",
+            'user_id'     => 1,
+            'category_id' => 1,
+            'slider'      => 2,
+            'price'       => 59
         ]);
 
-    //Metodo ORM
-    $gm = new game;
-    $gm->name           = 'Halo infinite';
-    $gm->description    = 'Halo: Infinite es un videojuego de disparos en primera persona próximo a estrenarse de la franquicia de videojuegos de ciencia ficción creada por Bungie Studios y continuada por 343 Industries y Sperasoft.';
-    $gm->user_id        = 1;
-    $gm->category_id    = 2;
-    $gm->slider         = 0;
-    $gm->price          = 49;
-    $gm->save();
+        // Metodo ORM
+        $gm = new Game;
+        $gm->name        = 'Halo Infinite';
+        $gm->description = 'Halo: Infinite es un videojuego de disparos en primera persona próximo a estrenarse de la franquicia de videojuegos de ciencia ficción creada por Bungie Studios y continuada por 343 Industries y Sperasoft.';
+        $gm->user_id     = 1;
+        $gm->category_id = 2;
+        $gm->slider      = 1;
+        $gm->price       = 49;
+        $gm->save();
 
-     //Metodo ORM
-     $gm = new game;
-     $gm->name           = "Demon's Souls";
-     $gm->description    = "Demon's Souls es un videojuego de rol de acción en tercera persona desarrollado por el estudio japonés From Software exclusivamente para la consola PlayStation 3.";
-     $gm->user_id        = 1;
-     $gm->category_id    = 3;
-     $gm->slider         = 0;
-     $gm->price          = 79;
-     $gm->save();
+        // Metodo ORM
+        $gm = new Game;
+        $gm->name        = "Demon's Souls";
+        $gm->description = "Demon's Souls es un juego de rol de acción desarrollado por Bluepoint Games, con la ayuda de Japan Studio, y publicado por Sony Interactive Entertainment.";
+        $gm->user_id     = 1;
+        $gm->category_id = 3;
+        $gm->slider      = 1;
+        $gm->price       = 79;
+        $gm->save();
     }
 }
