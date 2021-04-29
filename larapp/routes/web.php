@@ -82,6 +82,10 @@ Route::post('games/search', [GameController::class, 'search']);
 // Export PDF
 Route::get('export/users/pdf', [UserController::class, 'pdf']);
 
+Route::get('export/users/excel', [UserController::class, 'excel']);
+// Imports
+Route::post('import/users/excel', [UserController::class, 'import']);
+
 Route::resources([
     'users'       => 'UserController',
     'categories'  => 'CategoryController',
