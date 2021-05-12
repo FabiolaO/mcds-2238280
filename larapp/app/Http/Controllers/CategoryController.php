@@ -9,17 +9,26 @@ use App\Http\Requests\CategoryRequest;
 class CategoryController extends Controller
 {
     /**
+     * Create a new controller instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+    
+    /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
     public function index()
     {
-        $categories = Category::paginate(50);
-        return view('categories.index')->with('categories',$categories);
+        $catgs = Category::paginate(20);
+        return view('categories.index')->with('catgs', $catgs);
     }
 
-   
     /**
      * Show the form for creating a new resource.
      *
@@ -38,18 +47,18 @@ class CategoryController extends Controller
      */
     public function store(CategoryRequest $request)
     {
-        $category = new Category;
-        $category->name  = $request->name;
+        $catg = new Category;
+        $catg->name = $request->name;
         if ($request->hasFile('image')) {
             $file = time() . '.' . $request->image->extension();
             $request->image->move(public_path('imgs'), $file);
-            $category->image = 'imgs/' . $file;        }
-        $category->description      = $request->description;        
-
-        if ($category->save()) {
-            return redirect('categories')->with('message', 'The Category: ' . $category->name . ' was successfully added');
+            $catg->image = 'imgs/' . $file;
         }
+        $catg->description = $request->description;
 
+        if ($catg->save()) {
+            return redirect('categories')->with('message', 'The Category: ' . $catg->name . ' was successfully added');
+        }
     }
 
     /**
@@ -87,14 +96,13 @@ class CategoryController extends Controller
         if ($request->hasFile('image')) {
             $file = time() . '.' . $request->image->extension();
             $request->image->move(public_path('imgs'), $file);
-            $category->image = 'imgs/' . $file;    
-            }
-        $category->description      = $request->description;        
+            $category->image = 'imgs/' . $file;
+        }
+        $category->description = $request->description;
 
         if ($category->save()) {
             return redirect('categories')->with('message', 'The Category: ' . $category->name . ' was successfully edited');
         }
-
     }
 
     /**
@@ -110,10 +118,9 @@ class CategoryController extends Controller
         }
     }
 
-    public function search(Request $request) {
-        $categories = Category::names($request->q)->orderBy('id', 'DESC')->paginate(10);
-        return view('categories.search')->with('categories', $categories);
+    public function search(Request $request)
+    {
+        $catgs = Category::names($request->q)->orderBy('id', 'DESC')->paginate(20);
+        return view('categories.search')->with('catgs', $catgs);
     }
 }
-
-

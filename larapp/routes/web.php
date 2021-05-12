@@ -20,9 +20,12 @@ use App\Http\Controllers\GameController;
 |
 */
 
-Route::get('/', function () {
+/*Route::get('/', function () {
     return view('welcome');
-});
+});*/
+
+Route::get('/', [HomeController::class, 'welcome']);
+
 
 Route::get('hellow', function () {
     return "<h1> Hello! MCDS =) <h1>";
@@ -86,8 +89,16 @@ Route::get('export/users/excel', [UserController::class, 'excel']);
 // Imports
 Route::post('import/users/excel', [UserController::class, 'import']);
 
+// Filter
+Route::post('gamesbycat', [HomeController::class, 'gamesbycat']);
+
+
+// Group Middleware
+Route::group(['middleware' => 'admin'], function () {
+    // Resources
 Route::resources([
     'users'       => 'UserController',
     'categories'  => 'CategoryController',
     'games'       => 'GameController',
 ]);
+});

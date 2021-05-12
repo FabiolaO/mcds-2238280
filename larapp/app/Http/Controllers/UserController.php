@@ -9,9 +9,18 @@ use PDF;
 use App\Exports\UserExport;
 use App\Imports\UserImport;
 
-
 class UserController extends Controller
 {
+    /**
+     * Create a new controller instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+    
     /**
      * Display a listing of the resource.
      *
@@ -19,8 +28,8 @@ class UserController extends Controller
      */
     public function index()
     {
-       $users = User::paginate(50);
-       return view('users.index')->with('users',$users);
+        $users = User::paginate(50);
+        return view('users.index')->with('users', $users);
     }
 
     /**
@@ -39,9 +48,8 @@ class UserController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    /*public function store(Request $request)*/
-    public function store(UserRequest $request)    
-    {        
+    public function store(UserRequest $request)
+    {
         $user = new User;
         $user->fullname  = $request->fullname;
         $user->email     = $request->email;
@@ -62,9 +70,8 @@ class UserController extends Controller
         }
 
     }
-    
 
-     /**
+    /**
      * Display the specified resource.
      *
      * @param  \App\Models\User  $user
@@ -84,7 +91,6 @@ class UserController extends Controller
     public function edit(User $user)
     {
         return view('users.edit')->with('user', $user);
-        
     }
 
     /**
@@ -148,6 +154,5 @@ class UserController extends Controller
         \Excel::import(new UserImport, $file);
         return redirect()->back()->with('message', 'Usuarios importados con exito!');
     }
-
 
 }

@@ -47,6 +47,23 @@
     <script>
         $(document).ready(function() {
             /* - - - - - - - - - - - - - - - - - - */
+            $('.owl-carousel').owlCarousel({
+                loop: true,
+                margin: 10,
+                nav: true,
+                responsive:{
+                    0:{
+                        items: 1
+                    },
+                    600:{
+                        items: 2
+                    },
+                    1000:{
+                        items: 3
+                    }
+                }
+            });
+            /* - - - - - - - - - - - - - - - - - - */
             $('.btn-upload').click(function() {
                 $('#photo').click();
             });
@@ -76,7 +93,17 @@
                     });
             @endif
             /* - - - - - - - - - - - - - - - - - - */
-            $('.btn-delete').click(function() {
+            @if (session('error'))
+                Swal.fire({
+                    position: 'top-end',
+                    icon: 'error',
+                    title: '{{ session('error') }}',
+                    showConfirmButton: false,
+                    timer: 4000
+                    });
+            @endif
+            /* - - - - - - - - - - - - - - - - - - */
+            $('body').on('click', '.btn-delete', function() {
                 Swal.fire({
                     title: 'Are you sure?',
                     text: "You won't be able to revert this!",
@@ -113,74 +140,24 @@
                 }, 2000);
             });
             /* - - - - - - - - - - - - - - - - - - */
+            $('body').on('change', '#idcat', function(event) {
+                event.preventDefault();
+                $idcat = $(this).val();
+                $tk    = $('input[name=_token]').val();
+                $('.loader').removeClass('d-none');
+                $('#content').hide();
+                $sto = setTimeout(function() {
+                    clearTimeout($sto);
+                    $.post('gamesbycat', { 
+                        idcat:  $idcat,
+                        _token: $tk }, function(data) {
+                        $('.loader').addClass('d-none');
+                        $('#content').html(data).fadeIn('slow');
+                    });
+                },1600);
+            });
+            /* - - - - - - - - - - - - - - - - - - */
         });
     </script>
-
-<script>
-    $(document).ready(function() {
-        /* - - - - - - - - - - - - - - - - - - */
-        $('.btn-upload').click(function() {
-            $('#image').click();
-        });
-        /* - - - - - - - - - - - - - - - - - - */
-        $('#image').change(function(event) {
-            let reader = new FileReader();
-            reader.onload = function(event) {
-                $('#preview').attr('src', event.target.result);
-            }
-            reader.readAsDataURL(this.files[0]);
-        });
-        /* - - - - - - - - - - - - - - - - - - */
-        @if (session('message'))
-            Swal.fire({
-                position: 'top-end',
-                icon: 'success',
-                title: '{{ session('message') }}',
-                showConfirmButton: false,
-                timer: 2500
-                });
-        @endif
-        /* - - - - - - - - - - - - - - - - - - */
-        $('.btn-delete').click(function() {
-            Swal.fire({
-                title: 'Are you sure?',
-                text: "You won't be able to revert this!",
-                icon: 'warning',
-                showCancelButton: true,
-                confirmButtonColor: '#1e5f74',
-                cancelButtonColor: '#d0211c',
-                confirmButtonText: 'Yes, delete it!'
-                }).then((result) => {
-                if (result.value) {
-                    $(this).parent().submit();
-                }
-                });
-        });
-        /* - - - - - - - - - - - - - - - - - - */
-        $('body').on('keyup', '#qsearch', function(event) {
-            event.preventDefault();
-            $q = $(this).val();
-            $t = $('input[name=_token]').val();
-            $m = $('#tmodel').val();
-
-            $('.loader').removeClass('d-none');
-            $('.table').hide();
-
-            $sto = setTimeout(function() {
-                clearTimeout($sto);
-                $.post($m+"/search", {q: $q, _token: $t},
-                    function (data) {
-                          $('.loader').addClass('d-none');
-                          $('#content').html(data); 
-                          $('.table').fadeIn('slow'); 
-                    }
-                );
-            }, 2000);
-        });
-        /* - - - - - - - - - - - - - - - - - - */
-    });
-</script>
-
-
 </body>
 </html>
